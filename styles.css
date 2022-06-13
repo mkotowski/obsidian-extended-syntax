@@ -1,4 +1,20 @@
-/* Sets all the text color to red! */
-body {
-    color: red;
+.extended-syntax-spoiler {
+	color: var(--text-normal);
+	padding: 0.125em;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	transition: background-position 275ms ease;
+	background: linear-gradient(to right, var(--background-secondary), var(--background-secondary) 50%, var(--text-normal) 50%);
+	user-select: none;
+	border-radius: 6px;
+	margin-bottom: -0.5em;
+	background-size: 200% 100%;
+	animation-duration: 100ms;
+	background-position: 100%;
+}
+
+.extended-syntax-spoiler:hover {
+	user-select: auto;
+	background-position: 0 100%;
 }
