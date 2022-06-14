@@ -13,10 +13,10 @@ At the moment, the plugin by default adds the following elements:
   <center>center</center>
 - “Discord-style” spoiler tag: `||spoiler||` rendered as a “censored” text
 
-> **Note**
+> **Note**  
 > **Compatibility with other Markdown flavours:** All currently implemented tokens with the sole exception of Discord-style spoiler, can be safely replaced with a corresponding HTML notation and inline styles.
 
-> **Warning**
+> **Warning**  
 > At the time of developing this project, the Obsidian API is still in early alpha and is subject to change at any time!
 
 ## Development
