@@ -44,6 +44,8 @@ At the moment, the plugin by default adds the following elements:
 
 # Recommoneded plugins
 
+- [Obsidian Wrap With Shortcuts by manic][obsidian-wrap-with-shortcuts]
 - [Obsidian Emoji Shortcodes by phibr0][obsidian-emoji-shortcodes]
 
+[obsidian-wrap-with-shortcuts]: https://github.com/manic/obsidian-wrap-with-shortcuts
 [obsidian-emoji-shortcodes]: https://github.com/phibr0/obsidian-emoji-shortcodes
