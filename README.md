@@ -1,16 +1,16 @@
-# Obsidian Extended Syntax Plugin
+# Obsidian Extended Syntax
 
-This is a plugin for Obsidian (https://obsidian.md) adding support for non-standard Markdown syntax for less needed and/or more rare inline features.
+This is a plugin adding support for non-standard Markdown syntax for less needed and/or more rare inline features for [**Obsidian**](https://obsidian.md).
 
 The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
 
 At the moment, the plugin by default adds the following elements:
-- insertion: `++added text++` as <ins style="color:green">added text</ins>
-- subscript: `H~2~O` as H<sub>2</sub>O
-- superscript: `a^2^` as a<sup>2</sup>
-- small caps: `^^Small Caps^^` as <span style="font-variant:small-caps">Small Caps</span>
-- Centered text: `->center<-` as:
-  <center>center</center>
+- insertion: `++added text++` as `<ins style="color:green">added text</ins>`
+- subscript: `H~2~O` as `H<sub>2</sub>O`
+- superscript: `a^2^` as `a<sup>2</sup>`
+- underline: `..Underline..` as `<span style="text-decoration: underline">Underline</span>`
+- small caps: `^^Small Caps^^` as `<span style="font-variant:small-caps">Small Caps</span>`
+- Centered text: `->center<-` as `<center>center</center>`
 - “Discord-style” spoiler tag: `||spoiler||` rendered as a “censored” text
 
 > **Note**  
@@ -33,14 +33,6 @@ At the moment, the plugin by default adds the following elements:
 
 - Create an empty folder (named for example `obsidian-extended-syntax`) in your `VaultFolder/.obsidian/plugins/` folder.
 - Copy over the compiled `main.js`, `styles.css`, `manifest.json` to the created folder.
-
-## TODO
-
-- [ ] Add full support for nested Markdown and HTML.
-- [ ] Add *Live Preview* support.
-- [ ] Add settings for customization.
-- [ ] Add export to sanitized HTML.
-- [ ] Fix compatibility of spoiler tag with the Obsidian-native mark.
 
 # Recommoneded plugins
 
