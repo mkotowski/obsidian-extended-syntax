@@ -1,8 +1,5 @@
 import {
-	App,
 	Plugin,
-	PluginSettingTab,
-	Setting,
 	MarkdownPostProcessor,
 	MarkdownPostProcessorContext,
 } from "obsidian";
@@ -14,6 +11,8 @@ import {
 	ExtendedSyntaxSettings,
 	DEFAULT_SETTINGS,
 } from "./settings";
+
+import { ExtendedSyntaxSettingTab } from "./settingsTab";
 
 // Main Tags to search for custom syntax
 const TAGS = "p, h1, h2, h3, h4, h5, h6, ol, ul, table, span, div";
@@ -194,10 +193,10 @@ export default class ExtendedSyntax extends Plugin {
 		);
 
 		this.sortedInlineElementSettings.sort((a, b) => {
-			if (a.openingSequence < b.openingSequence) {
+			if (a.openingSequence > b.openingSequence) {
 				return -1;
 			}
-			if (a.openingSequence > b.openingSequence) {
+			if (a.openingSequence < b.openingSequence) {
 				return 1;
 			}
 			return 0;
@@ -227,62 +226,5 @@ export default class ExtendedSyntax extends Plugin {
 		this.sortedInlineElementSettings = JSON.parse(
 			JSON.stringify(this.settings.inlineElements)
 		);
-	}
-}
-
-class ExtendedSyntaxSettingTab extends PluginSettingTab {
-	plugin: ExtendedSyntax;
-
-	constructor(app: App, plugin: ExtendedSyntax) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const { containerEl } = this;
-
-		containerEl.empty();
-
-		containerEl.createEl("h2", {
-			text: "Settings for Extended Syntax plugin",
-		});
-
-		containerEl.createEl("p", {
-			text: "Obsidian must be reloaded for changes to be applied.",
-		});
-
-		this.plugin.settings.inlineElements.forEach((element) => {
-			new Setting(containerEl)
-				.setName(element.label)
-				.setDesc(element.description)
-				.addToggle((toggle) => {
-					toggle
-						.setValue(element.isEnabled)
-						.onChange(async (value) => {
-							element.isEnabled = value;
-							await this.plugin.saveSettings();
-						});
-				});
-		});
-
-		containerEl.createEl("h3", {
-			text: "Reset settings",
-		});
-
-		new Setting(containerEl)
-			.setName("Reset settings")
-			.addButton((button) => {
-				button
-					.setButtonText("Reset")
-					.setIcon("reset")
-					.onClick(async (event) => {
-						this.plugin.settings = JSON.parse(
-							JSON.stringify(DEFAULT_SETTINGS)
-						);
-						console.log("Extended Syntax settings resetted.");
-						await this.plugin.saveSettings();
-						this.display();
-					});
-			});
 	}
 }

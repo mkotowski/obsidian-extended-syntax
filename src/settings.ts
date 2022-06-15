@@ -28,16 +28,6 @@ export const DEFAULT_SETTINGS: ExtendedSyntaxSettings = {
 			htmlClasses: "extended-syntax-insert",
 		},
 		{
-			label: "Small caps",
-			description: "Syntax: ^^small caps^^",
-			isEnabled: false,
-			openingSequence: "^^",
-			closingSequence: "^^",
-			htmlTag: "span",
-			htmlStyle: "font-variant:small-caps",
-			htmlClasses: "extended-syntax-small-caps",
-		},
-		{
 			label: "Superscript",
 			description: "Syntax: ^superscript^",
 			isEnabled: true,
@@ -66,6 +56,16 @@ export const DEFAULT_SETTINGS: ExtendedSyntaxSettings = {
 			htmlTag: "span",
 			htmlStyle: "",
 			htmlClasses: "extended-syntax-spoiler",
+		},
+		{
+			label: "Small caps",
+			description: "Syntax: ^^small caps^^",
+			isEnabled: false,
+			openingSequence: "^^",
+			closingSequence: "^^",
+			htmlTag: "span",
+			htmlStyle: "font-variant:small-caps",
+			htmlClasses: "extended-syntax-small-caps",
 		},
 		{
 			label: "Underline",
