@@ -202,6 +202,8 @@ export default class ExtendedSyntax extends Plugin {
 			return 0;
 		});
 
+		console.log(this.sortedInlineElementSettings);
+
 		this.registerMarkdownPostProcessor(this.postprocessor);
 		this.addSettingTab(new ExtendedSyntaxSettingTab(this.app, this));
 		console.log("Extended Syntax plugin fully setup.");

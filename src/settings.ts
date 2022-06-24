@@ -50,7 +50,7 @@ export const DEFAULT_SETTINGS: ExtendedSyntaxSettings = {
 		{
 			label: "Spoiler",
 			description: "Syntax: ||spoiler||",
-			isEnabled: true,
+			isEnabled: false,
 			openingSequence: "||",
 			closingSequence: "||",
 			htmlTag: "span",

@@ -1,13 +1,16 @@
 import { App, Modal, Setting } from "obsidian";
 
 import { InlineSyntaxSettings } from "./settings";
+import { emitEvent } from "./customEvents";
 
 export class InlineElementSettingsModal extends Modal {
 	elementSettings: InlineSyntaxSettings;
+	originalElementSettings: InlineSyntaxSettings;
 
 	constructor(app: App, settings: InlineSyntaxSettings) {
 		super(app);
-		this.elementSettings = settings;
+		this.originalElementSettings = JSON.parse(JSON.stringify(settings));
+		this.elementSettings = JSON.parse(JSON.stringify(settings));
 	}
 
 	onOpen() {
@@ -19,28 +22,32 @@ export class InlineElementSettingsModal extends Modal {
 		new Setting(modalContent)
 			.setName("Label")
 			.setDesc("Specify the Name of your wrapper.")
-			.addText((text) => {
+			.addText(async (text) => {
 				text.setPlaceholder("Emphasis")
 					.setValue(this.elementSettings.label)
-					.onChange((value) => {});
+					.onChange((value) => {
+						this.elementSettings.label = value;
+					});
 			});
 
 		new Setting(modalContent)
 			.setName("Description")
 			.setDesc("Describe the element’s usage and meaning.")
-			.addText((text) => {
+			.addText(async (text) => {
 				text.setPlaceholder("Some brief explanation...")
 					.setValue(this.elementSettings.description)
-					.onChange((value) => {});
+					.onChange((value) => {
+						this.elementSettings.description = value;
+					});
 			});
 
 		new Setting(modalContent)
 			.setName("Enabled")
 			.setDesc("Should the tag be enabled?")
-			.addToggle((toggle) => {
+			.addToggle(async (toggle) => {
 				toggle
 					.setValue(this.elementSettings.isEnabled)
-					.onChange(async (value) => {
+					.onChange((value) => {
 						this.elementSettings.isEnabled = value;
 					});
 			});
@@ -50,25 +57,29 @@ export class InlineElementSettingsModal extends Modal {
 			.setDesc(
 				"What characters should mark the beginning of the element?"
 			)
-			.addText((text) => {
+			.addText(async (text) => {
 				text.setPlaceholder("**")
 					.setValue(this.elementSettings.openingSequence)
-					.onChange((value) => {});
+					.onChange((value) => {
+						this.elementSettings.openingSequence = value;
+					});
 			});
 
 		new Setting(modalContent)
 			.setName("Closing sequence")
 			.setDesc("What characters should mark the end of the element?")
-			.addText((text) => {
+			.addText(async (text) => {
 				text.setPlaceholder("**")
 					.setValue(this.elementSettings.closingSequence)
-					.onChange((value) => {});
+					.onChange((value) => {
+						this.elementSettings.closingSequence = value;
+					});
 			});
 
 		new Setting(modalContent)
 			.setName("HTML tag")
 			.setDesc("What HTML tag should be used.")
-			.addDropdown((dropdown) => {
+			.addDropdown(async (dropdown) => {
 				dropdown
 					.addOption("a", "<a></a>")
 					.addOption("cite", "<cite></cite>")
@@ -82,25 +93,32 @@ export class InlineElementSettingsModal extends Modal {
 					.addOption("strong", "<strong></strong>")
 					.addOption("sub", "<sub></sub>")
 					.addOption("sup", "<sup></sup>")
-					.setValue(this.elementSettings.htmlTag);
+					.setValue(this.elementSettings.htmlTag)
+					.onChange((value) => {
+						this.elementSettings.htmlTag = value;
+					});
 			});
 
 		new Setting(modalContent)
 			.setName("Inline CSS")
 			.setDesc("Optional CSS properties.")
-			.addText((text) => {
+			.addText(async (text) => {
 				text.setPlaceholder("color:red;user-select:none;")
 					.setValue(this.elementSettings.htmlStyle)
-					.onChange((value) => {});
+					.onChange((value) => {
+						this.elementSettings.htmlStyle = value;
+					});
 			});
 
 		new Setting(modalContent)
 			.setName("Custom classes")
 			.setDesc("Space-separated list of additional classes.")
-			.addText((text) => {
+			.addText(async (text) => {
 				text.setPlaceholder("color:red;user-select:none;")
 					.setValue(this.elementSettings.htmlClasses)
-					.onChange((value) => {});
+					.onChange((value) => {
+						this.elementSettings.htmlClasses = value;
+					});
 			});
 
 		modalContent.createEl("hr");
@@ -113,6 +131,18 @@ export class InlineElementSettingsModal extends Modal {
 		btnDiv.style.justifyContent = "flex-end";
 		btnDiv.appendChild(btnCancel);
 		btnDiv.appendChild(btnSave);
+
+		btnCancel.addEventListener("click", (event: MouseEvent) => {
+			this.close();
+		});
+
+		btnSave.addEventListener("click", (event: CustomEvent) => {
+			emitEvent("extended-syntax:inline-element-settings-edit", {
+				originalSettings: this.originalElementSettings,
+				editedSettings: this.elementSettings,
+			});
+			this.close();
+		});
 	}
 
 	onClose() {
