@@ -1,2 +1,6 @@
-npm node_modules
-build
+# Auto-generated dirs
+build/
+node_modules/
+
+# Auto-generated files
+main.js
